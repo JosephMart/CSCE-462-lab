@@ -15,16 +15,9 @@ class BinaryCounter:
         self.__value = bin(0)
 
         # Setup the pins as buttons
-        for i, b in enumerate(self.__buttons):
-            GPIO.setup(b, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-            # def scope(j):
-            #     return lambda x: j
-            # t = scope(i)
-            # GPIO.add_event_detect(b, GPIO.FALLING, callback=lambda x: self.__pressed(t), bouncetime=1000)
-
-        GPIO.add_event_detect(self.__b2, GPIO.FALLING, callback=lambda x: self.__pressed(1), bouncetime=BOUNCE_TIME)
-        GPIO.add_event_detect(self.__b3, GPIO.FALLING, callback=lambda x: self.__pressed(2), bouncetime=BOUNCE_TIME)
-        GPIO.add_event_detect(self.__b1, GPIO.FALLING, callback=lambda x: self.__pressed(0), bouncetime=BOUNCE_TIME)
+        GPIO.setup(self.__buttons, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        for b in self.__buttons:
+            GPIO.add_event_detect(b, GPIO.FALLING, callback=self.__pressed, bouncetime=BOUNCE_TIME)
 
 
     @property
@@ -32,7 +25,8 @@ class BinaryCounter:
         return self.__value
 
 
-    def __pressed(self, i: int = 0) -> None:
+    def __pressed(self, button) -> None:
+        i = self.__buttons.index(button)
         old_val = self.__value
         new_val = bin_add(self.__value, bin(2 ** i))
 
@@ -44,7 +38,7 @@ class BinaryCounter:
 
 
     def __del__(self):
-        GPIO.cleanup()
+        GPIO.cleanup(self.__buttons)
 
 
 
