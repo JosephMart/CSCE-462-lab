@@ -36,7 +36,7 @@ int main(void){
 	setPinMode(gpioBase, pin, OUTPUT);
 
 	int i;
-	for(i=0; i<10; i++){
+	for(i=0; i<1; i++){
 		setPinOn(gpioBase, pin);
 		sleep(1);
 		setPinOff(gpioBase, pin);
