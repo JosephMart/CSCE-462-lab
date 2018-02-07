@@ -1,8 +1,12 @@
-from RPi import GPIO
+import logging
 import traceback
-from BinaryCounter import BinaryCounter
-from constants import BUTTON_1, BUTTON_2, BUTTON_3
+from RPi import GPIO
 
+from BinaryCounter import BinaryCounter
+from constants import BUTTON_1, BUTTON_2, BUTTON_3, LOG_CONFIG
+
+logging.basicConfig(**LOG_CONFIG)
+log = logging.getLogger(__name__)
 
 def main():
     GPIO.setmode(GPIO.BCM)
@@ -11,20 +15,23 @@ def main():
     # Current binary value accessed with counter.value
     counter = BinaryCounter(BUTTON_1,BUTTON_2,BUTTON_3)
 
+    log.debug('main Successfully Setup')
+
     try:
         while True:
             value = counter.value
 
     except KeyboardInterrupt:
-        print('User ended the program')
+        log.debug('User ended the program')
 
     except Exception as e:
         var = traceback.format_exc()
-        print(e)
-        print(str(var))
+        log.debug(e)
+        log.debug(str(var))
 
     finally:
         GPIO.cleanup()
+        log.debug('Main Cleaned Up')
 
 
 if __name__ == '__main__':
