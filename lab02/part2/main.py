@@ -3,7 +3,8 @@ import traceback
 from RPi import GPIO
 
 from BinaryCounter import BinaryCounter
-from constants import BUTTON_1, BUTTON_2, BUTTON_3, LOG_CONFIG
+from utils import setup_pins
+from constants import BUTTON_1, BUTTON_2, BUTTON_3, LOG_CONFIG, PRINT_NUM
 
 logging.basicConfig(**LOG_CONFIG)
 log = logging.getLogger(__name__)
@@ -14,12 +15,14 @@ def main():
     # Setup Self Containing Binary Counter
     # Current binary value accessed with counter.value
     counter = BinaryCounter(BUTTON_1,BUTTON_2,BUTTON_3)
+    setup_pins()
 
     log.debug('main Successfully Setup')
 
     try:
         while True:
             value = counter.value
+            PRINT_NUM[value]()
 
     except KeyboardInterrupt:
         log.debug('User ended the program')

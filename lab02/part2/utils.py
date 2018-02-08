@@ -9,23 +9,6 @@ FLICKER_TIME = .005
 X = [22, 27, 5, 17, 19, 6, 26, 13] # Ordered of Positive
 Y = [18, 23, 25, 21, 12, 20, 16, 24] # Ordered of Ground
 
-def main():
-    GPIO.setmode(GPIO.BCM)
-    setup_pins()
-
-    try:
-        while True:
-            print_1()
-
-    except KeyboardInterrupt:
-        print('User ended the program')
-
-    except Exception as e:
-        print(e)
-
-    finally:
-        GPIO.cleanup()
-
 def print_0():
     pins_off(Y[:7])
     pins_on(X[2])
@@ -69,11 +52,11 @@ def print_4():
     flicker()
 
     pins_on(X[2])
-    pins_off(Y[4:6])
+    pins_off(Y[4:7])
     flicker()
 
     pins_on(X[5])
-    pins_off(Y[:6])
+    pins_off(Y[:7])
     flicker()
 
 def print_5():
@@ -141,6 +124,3 @@ def pins_on(pins):
 
 def pins_off(pins):
     GPIO.output(pins, False)
-
-if __name__ == '__main__':
-    main()
