@@ -17,7 +17,7 @@ def main():
         # GPIO.setmode(GPIO.BCM)
 
         log.debug('main Successfully Setup')
-        display_tests()
+        test_green()
 
     except KeyboardInterrupt:
         log.debug('User ended the program')
@@ -86,10 +86,22 @@ def multi_threading():
 def display_tests():
     GPIO.setmode(GPIO.BCM)
     d = DigitDisplay(DISPLAY_PINS)
-    d.display_0()
+
+    for x in range(10):
+        d.display(x)
+        sleep(1)
 
     while True:
         pass
+
+def test_green():
+    GPIO.setmode(GPIO.BCM)
+    cross_light = RGB(**CROSS_LIGHT_PINS)
+    cross_light.green()
+    while True:
+        pass
+
+
 
 if __name__ == '__main__':
     main()
