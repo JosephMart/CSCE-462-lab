@@ -2,6 +2,7 @@ import logging
 import traceback
 from RPi import GPIO
 
+
 from BinaryCounter import BinaryCounter
 from utils import setup_pins
 from constants import BUTTON_1, BUTTON_2, BUTTON_3, LOG_CONFIG, PRINT_NUM
